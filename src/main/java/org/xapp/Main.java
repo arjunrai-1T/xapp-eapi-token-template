@@ -1,6 +1,7 @@
 package org.xapp;
 
 import io.jsonwebtoken.Claims;
+import org.xapp.util.HashGenerator;
 import org.xapp.util.JwtUtil;
 
 import javax.crypto.SecretKey;
@@ -66,10 +67,22 @@ public class Main {
         }else{
             System.out.println("main EAPI token is not correct ");
         }
+
+
+    }
+
+    public static void keyGenerateOperation(){
+        HashGenerator.TestGenerateHashFromAnyString("TestGenerateHashFromAnyString");
+        HashGenerator.TestGenerateWEPKeyExample();
+        HashGenerator.TestGenerateWEPKeyFromStringExample("TestGenerateWEPKeyFromStringExample");
+        HashGenerator.TestGenerateFortKnoxHashExample("TestGenerateFortKnoxHashExample");
+        HashGenerator.TestGenerateWPAKeyExample();
+        HashGenerator.TestGenerateWPAKeyFromWordExample("TestGenerateWPAKeyFromWordExample");
     }
 
     public static void main(String[] args) {
         tokenOperation();
+        keyGenerateOperation();
     }
 
 }
