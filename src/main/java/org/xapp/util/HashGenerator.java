@@ -1,5 +1,7 @@
 package org.xapp.util;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
@@ -30,53 +32,55 @@ SHA Algorithms
 @Component
 public class HashGenerator {
 
+    public static Logger logger = LogManager.getLogger(HashGenerator.class);
+
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:'\",.<>?/`~";
 
     public static void TestGenerateHashFromAnyString(String word) {
         //Ref:  https://randomkeygen.com
-        System.out.println("TestGenerateHashFromAnyString SHA-1:   " + generateHash(word,"SHA-1") );
-        System.out.println("TestGenerateHashFromAnyString SHA-256: " + generateHash(word,"SHA-256") );
-        System.out.println("TestGenerateHashFromAnyString SHA-384: " + generateHash(word,"SHA-384") );
-        System.out.println("TestGenerateHashFromAnyString SHA-512: " + generateHash(word,"SHA-512") );
+        logger.info("TestGenerateHashFromAnyString SHA-1:   " + generateHash(word,"SHA-1") );
+        logger.info("TestGenerateHashFromAnyString SHA-256: " + generateHash(word,"SHA-256") );
+        logger.info("TestGenerateHashFromAnyString SHA-384: " + generateHash(word,"SHA-384") );
+        logger.info("TestGenerateHashFromAnyString SHA-512: " + generateHash(word,"SHA-512") );
     }
 
     public static void TestGenerateWEPKeyExample() {
         //Ref:  https://randomkeygen.com
-        System.out.println("TestGenerateWEPKeyExample 64-bit WEP Key: " + generateWEPKey(5));  //Example 766D4
-        System.out.println("TestGenerateWEPKeyExample 128-bit WEP Key: " + generateWEPKey(13)); //Example E42ABB1C3498C
-        System.out.println("TestGenerateWEPKeyExample 152-bit WEP Key: " + generateWEPKey(16)); //Example 96D376B574152283
-        System.out.println("TestGenerateWEPKeyExample 160-bit WEP Key: " + generateWEPKey(20)); //Example G+U]oVIC:xW{/>BTJz?O
-        System.out.println("TestGenerateWEPKeyExample 256-bit WEP Key: " + generateWEPKey(29)); //Example 979615D89A618CFED28C492ACAACC
-        System.out.println("TestGenerateWEPKeyExample 504-bit WEP Key: " + generateWEPKey(63)); //Example L0mtOfp?nfi'?{>`"s|03H"Wza.Y&mV86okw(/Td:(AN<"hT3FN'4YdnnK<lRY)
+        logger.info("TestGenerateWEPKeyExample 64-bit WEP Key: " + generateWEPKey(5));  //Example 766D4
+        logger.info("TestGenerateWEPKeyExample 128-bit WEP Key: " + generateWEPKey(13)); //Example E42ABB1C3498C
+        logger.info("TestGenerateWEPKeyExample 152-bit WEP Key: " + generateWEPKey(16)); //Example 96D376B574152283
+        logger.info("TestGenerateWEPKeyExample 160-bit WEP Key: " + generateWEPKey(20)); //Example G+U]oVIC:xW{/>BTJz?O
+        logger.info("TestGenerateWEPKeyExample 256-bit WEP Key: " + generateWEPKey(29)); //Example 979615D89A618CFED28C492ACAACC
+        logger.info("TestGenerateWEPKeyExample 504-bit WEP Key: " + generateWEPKey(63)); //Example L0mtOfp?nfi'?{>`"s|03H"Wza.Y&mV86okw(/Td:(AN<"hT3FN'4YdnnK<lRY)
     }
 
     public static void TestGenerateWEPKeyFromStringExample(String word) {
         //Ref:  https://randomkeygen.com
-        System.out.println("TestGenerateWEPKeyFromStringExample 64-bit WEP Key: " + generateWEPKeyFromString (word, 5));  //Example 766D4
-        System.out.println("TestGenerateWEPKeyFromStringExample 128-bit WEP Key: " + generateWEPKeyFromString(word, 13)); //Example E42ABB1C3498C
-        System.out.println("TestGenerateWEPKeyFromStringExample 152-bit WEP Key: " + generateWEPKeyFromString(word, 16)); //Example 96D376B574152283
-        System.out.println("TestGenerateWEPKeyFromStringExample 160-bit WEP Key: " + generateWEPKeyFromString(word,20));  //Example G+U]oVIC:xW{/>BTJz?O
-        System.out.println("TestGenerateWEPKeyFromStringExample 256-bit WEP Key: " + generateWEPKeyFromString(word, 29)); //Example 979615D89A618CFED28C492ACAACC
-        System.out.println("TestGenerateWEPKeyFromStringExample 504-bit WEP Key: " + generateWEPKeyFromString(word,63));  //Example L0mtOfp?nfi'?{>`"s|03H"Wza.Y&mV86okw(/Td:(AN<"hT3FN'4YdnnK<lRY)
+        logger.info("TestGenerateWEPKeyFromStringExample 64-bit WEP Key: " + generateWEPKeyFromString (word, 5));  //Example 766D4
+        logger.info("TestGenerateWEPKeyFromStringExample 128-bit WEP Key: " + generateWEPKeyFromString(word, 13)); //Example E42ABB1C3498C
+        logger.info("TestGenerateWEPKeyFromStringExample 152-bit WEP Key: " + generateWEPKeyFromString(word, 16)); //Example 96D376B574152283
+        logger.info("TestGenerateWEPKeyFromStringExample 160-bit WEP Key: " + generateWEPKeyFromString(word,20));  //Example G+U]oVIC:xW{/>BTJz?O
+        logger.info("TestGenerateWEPKeyFromStringExample 256-bit WEP Key: " + generateWEPKeyFromString(word, 29)); //Example 979615D89A618CFED28C492ACAACC
+        logger.info("TestGenerateWEPKeyFromStringExample 504-bit WEP Key: " + generateWEPKeyFromString(word,63));  //Example L0mtOfp?nfi'?{>`"s|03H"Wza.Y&mV86okw(/Td:(AN<"hT3FN'4YdnnK<lRY)
     }
 
     public static void TestGenerateFortKnoxHashExample(String word) {
         //Ref:  https://randomkeygen.com
         //Fort Knox Passwords  Hash RLPN3@{X)3Z>`^fb*0fVD{xxsNA7Gu ,7~Lw&l}t$3/N1b7t@M}Q{)d'{{%F:f,KTK_bRN*1#Y.MEcN|AW==OG8Wo#U-^,*~@7MIK{yG:L~wSABJ7{e_sldM!^;f
-        System.out.println("TestGenerateFortKnoxHashExample Random Hash: " + generateFortKnoxHash(32));
-        System.out.println("TestGenerateFortKnoxHashExample Hash from String: " + generateFortKnoxHashFromWord(word, 32));
+        logger.info("TestGenerateFortKnoxHashExample Random Hash: " + generateFortKnoxHash(32));
+        logger.info("TestGenerateFortKnoxHashExample Hash from String: " + generateFortKnoxHashFromWord(word, 32));
     }
 
     public static void TestGenerateWPAKeyExample() {
         //Ref:  https://randomkeygen.com
-        System.out.println("TestGenerateWPAKeyExample Generated 160-bit WPA Key: " + generateWPAKey(20));
-        System.out.println("TestGenerateWPAKeyExample Generated 504-bit WPA Key: " + generateWPAKey(63));
+        logger.info("TestGenerateWPAKeyExample Generated 160-bit WPA Key: " + generateWPAKey(20));
+        logger.info("TestGenerateWPAKeyExample Generated 504-bit WPA Key: " + generateWPAKey(63));
     }
 
     public static void TestGenerateWPAKeyFromWordExample(String word) {
         //Ref:  https://randomkeygen.com
-        System.out.println("TestGenerateWPAKeyFromWordExample Generated 160-bit WPA Key: " + generateWPAKeyFromWord(word, 20));
-        System.out.println("TestGenerateWPAKeyFromWordExample Generated 504-bit WPA Key: " + generateWPAKeyFromWord(word, 63));
+        logger.info("TestGenerateWPAKeyFromWordExample Generated 160-bit WPA Key: " + generateWPAKeyFromWord(word, 20));
+        logger.info("TestGenerateWPAKeyFromWordExample Generated 504-bit WPA Key: " + generateWPAKeyFromWord(word, 63));
     }
 
     public static String generateHash(String input,String algoName) {

@@ -4,7 +4,10 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import java.nio.charset.StandardCharsets;
 import io.jsonwebtoken.security.MacAlgorithm;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
+
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.MessageDigest;
@@ -15,6 +18,8 @@ import java.security.NoSuchAlgorithmException;
 
 @Component
 public class JwtUtil {
+
+    public static Logger logger = LogManager.getLogger(JwtUtil.class);
 
     // Define your secret key (make sure it's at least 256 bits for HS512)
     // String baseKey = "your-very-secure-key-that-is-at-least-64-bytes-long!"; // Replace with your actual key
@@ -76,13 +81,13 @@ public class JwtUtil {
                          .signWith(key, alg).compact();
             return jws_Token;
         } catch (io.jsonwebtoken.security.InvalidKeyException ex) {
-            System.out.println("validateTokenAndClaim IllegalArgumentException: " + ex.getMessage());
+            logger.info("validateTokenAndClaim IllegalArgumentException: " + ex.getMessage());
             return null;
         } catch (io.jsonwebtoken.JwtException ex) {
-            System.out.println("validateTokenAndClaim JwtException: " + ex.getMessage());
+            logger.info("validateTokenAndClaim JwtException: " + ex.getMessage());
             return null;
         }catch (Exception ex) {
-            System.out.println("validateTokenAndClaim Exception: " + ex.getMessage());
+            logger.info("validateTokenAndClaim Exception: " + ex.getMessage());
             return null;
         }
     }
@@ -96,13 +101,13 @@ public class JwtUtil {
                     .parseSignedClaims(token) // Returns Claims
                     .getPayload();
         } catch (io.jsonwebtoken.JwtException ex) {
-            System.out.println("validateTokenAndClaim JwtException: " + ex.getMessage());
+            logger.info("validateTokenAndClaim JwtException: " + ex.getMessage());
             return null;
         } catch (IllegalArgumentException ex) {
-            System.out.println("validateTokenAndClaim IllegalArgumentException: " + ex.getMessage());
+            logger.info("validateTokenAndClaim IllegalArgumentException: " + ex.getMessage());
             return null;
         } catch (Exception ex) {
-            System.out.println("validateTokenAndClaim Exception: " + ex.getMessage());
+            logger.info("validateTokenAndClaim Exception: " + ex.getMessage());
             return null;
         }
     }
