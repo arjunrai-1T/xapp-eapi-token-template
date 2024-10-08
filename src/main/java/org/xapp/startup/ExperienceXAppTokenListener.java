@@ -50,17 +50,29 @@ public class ExperienceXAppTokenListener implements ApplicationListener<Applicat
         //Token issue at
         Date dateIssuedAt = new Date(System.currentTimeMillis());
         Instant instantIssuedAt = dateIssuedAt.toInstant();
-        LocalDateTime localDateTimeIssuedAt = LocalDateTime.ofInstant(instantIssuedAt, ZoneId.systemDefault());
+        //LocalDateTime localDateTimeIssuedAt = LocalDateTime.ofInstant(instantIssuedAt, ZoneId.systemDefault());
+        LocalDateTime localDateTimeIssuedAt = LocalDateTime.from(instantIssuedAt);
         //Token Expiry
         Date dateExpiry = new Date(System.currentTimeMillis() + EXPIRATION_TIME);
         Instant instantExpiry = dateExpiry.toInstant();
-        LocalDateTime localDateTimeExpiry = LocalDateTime.ofInstant(instantExpiry, ZoneId.systemDefault());
+        // LocalDateTime localDateTimeExpiry = LocalDateTime.ofInstant(instantExpiry, ZoneId.systemDefault());
+        LocalDateTime localDateTimeExpiry = LocalDateTime.from(instantExpiry);
         //Token issuer userid
         String tokenIssuerID= client_issuer;
         String clientAppId = client_id;
+
         Token token = tokenService.saveToken(clientAppId,tokenInfo,tokenIssuerID,localDateTimeIssuedAt,localDateTimeExpiry);
         Optional<Token> storeToken= tokenService.getToken(token.getTokenId());
         logger.info("get storeToken Token Info: {}",storeToken.get());
+
+        tokenInfo="";
+        tokenInfo =  tokenOperation(client_id, client_issuer,client_subject);
+        token = null;
+        token = tokenService.saveToken(clientAppId,tokenInfo,tokenIssuerID,localDateTimeIssuedAt,localDateTimeExpiry);
+        storeToken = null;
+        storeToken= tokenService.getToken(token.getTokenId());
+        logger.info("get storeToken Token Info: {}",storeToken.get());
+
         logger.info("Exit ExperienceXAppTokenListener");
     }
 }
