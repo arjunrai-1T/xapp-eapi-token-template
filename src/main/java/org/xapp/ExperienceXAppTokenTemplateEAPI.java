@@ -1,11 +1,26 @@
 package org.xapp;
 
 import io.jsonwebtoken.Claims;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.ComponentScan;
 import org.xapp.util.HashGenerator;
 import org.xapp.util.JwtUtil;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
+
+
+
 /*
     Use : https://randomkeygen.com/
     EAPI endpoint : getAccessToken
@@ -22,8 +37,21 @@ import java.util.Date;
     client_app_type              : APP type WEB or MOBILE
     client_issuer                : User ID who registered this EAPI (System Generated given value)
     client_subject               : resource or Access Specifier Code what type of EAPI can consumed (System Generated)
+
+    //Disable if you do not need database service
+    @SpringBootApplication(exclude = {
+            HibernateJpaAutoConfiguration.class,
+            JpaRepositoriesAutoConfiguration.class,
+            DataSourceAutoConfiguration.class
+    })
 */
-public class Main {
+@SpringBootApplication
+@ComponentScan("org.xapp")
+public class ExperienceXAppTokenTemplateEAPI implements CommandLineRunner {
+
+    private static ApplicationContext applicationContext;
+
+    public static Logger logger = LogManager.getLogger(ExperienceXAppTokenTemplateEAPI.class);
 
     public static void tokenOperation(){
         JwtUtil jwtUtil = new JwtUtil();
@@ -46,26 +74,26 @@ public class Main {
         SecretKey secretKey = jwtUtil.createSecretKey(client_secret);
         // Store into database
         String    secretKeyStr = jwtUtil.encodeSecretKeyToString(secretKey);
-        System.out.println("main Secrete Key String >>> "+ secretKeyStr);
+        logger.info("tokenOperation Secrete Key String >>> "+ secretKeyStr);
         String jws_Token = jwtUtil.createToken(secretKey,client_id,client_issuer,client_subject);
-        System.out.println("main EAPI token >>> "+ jws_Token);
+        logger.info("tokenOperation EAPI token >>> "+ jws_Token);
 
         // Validate Token
         // Get SecretKey from database secretKey string
         SecretKey decodedSecretKey = jwtUtil.decodeStringToSecretKey(secretKeyStr);
         Claims claims = jwtUtil.validateTokenAndGetClaim(jws_Token, decodedSecretKey);
         if (claims != null) {
-            System.out.println("main EAPI token is correct ");
+            logger.info("tokenOperation EAPI token is correct ");
             String subject  = claims.getSubject(); // Get subject or any other claim
             Date issuedAt   = claims.getIssuedAt(); // Get issued date
             Date expiration = claims.getExpiration(); // Get expiration date
-            System.out.println("main Token ID:         " + claims.getId());
-            System.out.println("main Token Issuer:     " + claims.getIssuer());
-            System.out.println("main Token Subject:    " + claims.getSubject());
-            System.out.println("main Token Issued At:  " + claims.getIssuedAt());
-            System.out.println("main Token Expiration: " + claims.getExpiration());
+            logger.info("tokenOperation Token ID:         " + claims.getId());
+            logger.info("tokenOperation Token Issuer:     " + claims.getIssuer());
+            logger.info("tokenOperation Token Subject:    " + claims.getSubject());
+            logger.info("tokenOperation Token Issued At:  " + claims.getIssuedAt());
+            logger.info("tokenOperation Token Expiration: " + claims.getExpiration());
         }else{
-            System.out.println("main EAPI token is not correct ");
+            logger.info("tokenOperation EAPI token is not correct ");
         }
 
 
@@ -81,8 +109,17 @@ public class Main {
     }
 
     public static void main(String[] args) {
+<<<<<<< HEAD:src/main/java/org/xapp/Main.java
         tokenOperation();
         keyGenerateOperation();
+=======
+        ExperienceXAppTokenTemplateEAPI.applicationContext = SpringApplication.run(ExperienceXAppTokenTemplateEAPI.class,args);
+>>>>>>> 1e30f501ab0857189871ea203db67a439334df0f:src/main/java/org/xapp/ExperienceXAppTokenTemplateEAPI.java
     }
 
+    @Override
+    public void run(String... args) throws Exception {
+        // tokenOperation();
+        // keyGenerateOperation();
+    }
 }

@@ -1,5 +1,7 @@
 package org.xapp.util;
 
+import org.springframework.stereotype.Component;
+
 public class SignatureAlgorithmCustom {
 
     private final String name;
