@@ -71,13 +71,26 @@ public class JwtUtil {
         String jws_Token="";
         // Create a test key suitable for the desired HMAC-SHA algorithm:
         MacAlgorithm alg = Jwts.SIG.HS512;
+        long nowMillis = System.currentTimeMillis();
+        logger.info("validateTokenAndClaim nowMillis: {}",nowMillis);
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException ex) {
+            logger.info("validateTokenAndClaim Thread.sleep InterruptedException");
+        }
+        long afterMillis = System.currentTimeMillis();
+        logger.info("validateTokenAndClaim afterMillis: {}",afterMillis);
+        Date issuedDate     = new Date(nowMillis);
+        Date expirationDate = new Date(afterMillis + EXPIRATION_TIME);
+        logger.info("token start Date & Time Stamp:{} " ,issuedDate);
+        logger.info("token end   Date & Time Stamp:{} " ,expirationDate);
         try{
             jws_Token = Jwts.builder()
                          .id(id) // Web or Mobile App Id
                          .issuer(issuer)
                          .subject(subject)
-                         .issuedAt(new Date()) //Current Date
-                         .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME)) //Current Date with 1 Hour
+                         .issuedAt(issuedDate) //Current Date
+                         .expiration(expirationDate) //Current Date with 1 Hour
                          .signWith(key, alg).compact();
             return jws_Token;
         } catch (io.jsonwebtoken.security.InvalidKeyException ex) {

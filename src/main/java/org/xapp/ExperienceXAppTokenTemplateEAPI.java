@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfig
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.ComponentScan;
@@ -18,8 +19,6 @@ import org.xapp.util.JwtUtil;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
-
-
 
 /*
     Use : https://randomkeygen.com/
@@ -47,6 +46,7 @@ import java.util.Date;
 */
 @SpringBootApplication
 @ComponentScan("org.xapp")
+@EnableCaching
 public class ExperienceXAppTokenTemplateEAPI implements CommandLineRunner {
 
     private static ApplicationContext applicationContext;
@@ -95,8 +95,6 @@ public class ExperienceXAppTokenTemplateEAPI implements CommandLineRunner {
         }else{
             logger.info("tokenOperation EAPI token is not correct ");
         }
-
-
     }
 
     public static void keyGenerateOperation(){
