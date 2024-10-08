@@ -31,9 +31,9 @@ public class Token implements Serializable {
     @Column(name="tokenIssuerID")
     private String tokenIssuerID;
 
-    @Column(name="tokenIssuedAt")
+    @Column(name="tokenIssuedAt",columnDefinition = "TIMESTAMP")
     private LocalDateTime tokenIssuedAt;
 
-    @Column(name="tokenExpiry")
+    @Column(name="tokenExpiry",columnDefinition = "TIMESTAMP")
     private LocalDateTime tokenExpiry;
 }
