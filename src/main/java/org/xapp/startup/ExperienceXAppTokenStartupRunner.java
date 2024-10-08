@@ -1,4 +1,4 @@
-package org.xapp.util;
+package org.xapp.startup;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

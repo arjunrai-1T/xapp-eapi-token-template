@@ -27,6 +27,12 @@ public class Token implements Serializable {
     @Column(name="token")
     private String token;
 
+    @Column(name="tokenIssuerID")
+    private String tokenIssuerID;
+
+    @Column(name="tokenIssuedAt")
+    private LocalDateTime tokenIssuedAt;
+
     @Column(name="tokenExpiry")
     private LocalDateTime tokenExpiry;
 }
